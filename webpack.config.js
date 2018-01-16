@@ -2,8 +2,8 @@ var webpack = require('webpack');
 
 var config = {
     entry: {
-        'index': "./js/index.js",
-        //vendor: ['react','react-dom','iscroll','jquery']
+        'index': "./index.js",
+        ///endor: ['react','react-dom','iscroll','jquery']
     },
     output: {
         //publicPath: './static/js',
@@ -22,16 +22,29 @@ var config = {
         //'jquery':"$",
         // 'iscroll':'IScroll'
     },
+
+    resolve: {
+        alias: {
+            'vue': 'vue/dist/vue.js',
+        },
+        extensions: ['', '.js', '.vue'],
+    },
+
     plugins: [
         /* new webpack.optimize.CommonsChunkPlugin({
             name:"vendor",  
          }),*/
     ],
     module: {
+
         loaders: [{
             test: /\.jsx|\.js|\.es6$/,
             exclude: /node_modules/,
-            loaders: ['react-hot', 'babel']
+            loaders: ['babel-loader']
+        }, {
+            test: /\.vue$/,
+            exclude: /node_modules/,
+            loader: 'vue'
         }, {
             test: /\.(css)$/,
             loader: 'style-loader!css-loader'
@@ -43,6 +56,9 @@ var config = {
             loader: 'url-loader?limit=8192'
         }]
     },
+    babel: {
+
+    }
 
 }
 
