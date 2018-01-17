@@ -38,22 +38,19 @@ var config = {
     module: {
 
         loaders: [{
-            test: /\.jsx|\.js|\.es6$/,
+            test: /\.js|\.es6$/,
             exclude: /node_modules/,
             loaders: ['babel-loader']
         }, {
             test: /\.vue$/,
             exclude: /node_modules/,
-            loader: 'vue'
+            loaders: ['vue-loader']
         }, {
             test: /\.(css)$/,
             loader: 'style-loader!css-loader'
         }, {
             test: /\.(eot|svg|ttf|woff|woff2|png)\w*/,
             loader: 'file'
-        }, {
-            test: /\.(png|jpg)$/,
-            loader: 'url-loader?limit=8192'
         }]
     },
     babel: {
