@@ -23,6 +23,7 @@ body {
 	font-size: 14px;
 	background: #e7ecf8;
 	//overflow: hidden;
+	overflow-x:hidden;
 }
 
 img {
@@ -36,6 +37,49 @@ img {
 	height: 100%;
 }
 
+.zmiti-a-list{
+	@include pos(a);
+	bottom:0rem;
+	width:100%;
+	font-size:12px;
+	height:70vh;
+	color:#fff;
+	text-align:center;
+	z-index: 10;
+	left:0;
+	overflow:hidden;
+
+
+	li{
+
+		&.left{
+			left: -.3rem;
+		}
+		&.right{
+			right: -.3rem;
+		}
+		
+		min-width: 6rem;
+		height: 2rem;
+		line-height: 1.8rem;
+		@include pos(a);
+		$top:4rem;
+		&>img{
+			width: .4rem;
+			margin-right: .2rem;
+		}
+		&:nth-of-type(1){
+			top: 1rem;
+		}
+		&:nth-of-type(2){
+			top: $top*1+1;
+		}
+		&:nth-of-type(3){
+			top: $top*2+1;
+		}
+	}
+}
+
 .zmiti-main-ui {
 	height: 100%;
 }
@@ -44,12 +88,15 @@ img {
 	width: 100%;
 	height: 100%;
 	@include pos(r);
+	z-index: 10;
+	
 }
 
 .zmiti-main-q-header {
 	width: 8rem;
 	margin: 0 auto;
 	color: #fff;
+
 	line-height: 1.5;
 	font-size: 12px;
 	padding: 1rem .8rem .6rem;
@@ -60,6 +107,16 @@ img {
 	min-height: 2rem;
 	overflow: hidden;
 	top: .4rem;
+
+	.zmiti-num{
+		@include pos(a);
+		width: 100%;
+		text-align: center;
+		font-size: .5rem;
+		top: .3rem;
+		left: 0;
+		z-index: 10;
+	}
 
 	&>img {
 		@include pos(a);
