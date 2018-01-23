@@ -1,0 +1,48 @@
+@import "./base.scss";
+
+.zmiti-index-main-ui {
+	z-index: 101;
+	@include transform3d;
+	overflow: hidden;
+
+	&.hide {
+		opacity: 0;
+		@include transition(1s 1s);
+	}
+
+	.zmiti-index-title {
+		@include pos(a);
+		width: 8rem;
+		left: 1rem;
+		top: 1rem;
+	}
+
+	.zmiti-index-start {
+		@include pos(a);
+		width: 4rem;
+		left: 3rem;
+		top: 70%;
+		@include transform(rotateX(40deg) translateZ(80px) scale(.8));
+		@include transformOrigin(bottom);
+		z-index: 121;
+	}
+
+	canvas {
+		@include pos(a);
+		left: 0;
+		top: 0;
+	}
+
+	.zmiti-road {
+		display: none;
+		width: 15rem;
+		height: 10rem;
+		@include pos(a);
+		top: 80%;
+		left: 0%;
+		border: 5px dashed #ccc;
+		@include br();
+		@include transform(rotate(-63deg));
+	}
+
+}

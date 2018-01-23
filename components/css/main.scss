@@ -22,8 +22,7 @@ body {
 	font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", '微软雅黑', arial, sans-serif;
 	font-size: 14px;
 	background: #e7ecf8;
-	//overflow: hidden;
-	overflow-x:hidden;
+	overflow: hidden;
 }
 
 img {
@@ -37,51 +36,175 @@ img {
 	height: 100%;
 }
 
-.zmiti-a-list{
+.zmiti-snow {
 	@include pos(a);
-	bottom:0rem;
-	width:100%;
-	font-size:12px;
-	height:70vh;
-	color:#fff;
-	text-align:center;
+	left: 0;
+	top: 20px;
+	width: 5px;
+	height: 5px;
+	@include br();
+	z-index: 110;
+	background: #fff;
+}
+
+.zmiti-score {
+	@include pos(a);
+	width: 3rem;
+	top: 4rem;
+	right: 0;
+	z-index: 100;
+	font-family: Georgia;
+	font-size: .5rem;
+
+	.zmiti-score-num, .zmiti-time {
+		@include pos(a);
+		color: #fff;
+		width: 100%;
+		text-align: center;
+	}
+
+	.zmiti-score-num {
+		top: .70rem;
+		width: .6rem;
+		height: .6rem;
+		overflow: hidden;
+		left: 50%;
+		@include transform(translate3d(-50%, 0, 0));
+
+		.zmiti-score-item {
+			width: .75rem;
+			height: .75rem;
+			display: block;
+			box-sizing: border-box;
+			@include pos(r);
+			left: -.08rem;
+			top: .04rem;
+			margin: 0 auto;
+			@include transform(translate3d(0, 0, 0));
+			@include transition(.4s);
+		}
+
+	}
+
+	.zmiti-time {
+		bottom: 0;
+	}
+
+}
+
+.zmiti-a-list {
+	@include pos(a);
+	bottom: 0rem;
+	width: 100%;
+	font-size: 12px;
+	height: 70vh;
+	color: #fff;
+	text-align: center;
 	z-index: 10;
-	left:0;
-	overflow:hidden;
+	left: 0;
+	overflow: hidden;
 
+	&.show {
+		li {
+			.zmiti-snow-img {
+				opacity: 1;
+				@include transition(4s 1s);
+			}
 
-	li{
+		}
 
-		&.left{
+	}
+
+	li {
+		&.left {
 			left: -.3rem;
 		}
-		&.right{
+
+		&.right {
 			right: -.3rem;
 		}
-		
+
+		.zmiti-snow {
+			width: 4px;
+			height: 4px;
+			@include br();
+			background: #f00;
+			@include pos(a);
+			top: 2px;
+		}
+
 		min-width: 6rem;
 		height: 2rem;
 		line-height: 1.8rem;
 		@include pos(a);
-		$top:4rem;
-		&>img{
+		$top: 3rem;
+
+		&>img {
 			width: .4rem;
 			margin-right: .2rem;
 		}
-		&:nth-of-type(1){
+
+		&>.zmiti-snow-img {
+			width: 100%;
+			@include pos(a);
+			left: 0;
+			margin: 0;
+			top: 0;
+			opacity: 0;
+		}
+
+		&:nth-of-type(1) {
 			top: 1rem;
 		}
-		&:nth-of-type(2){
+
+		&:nth-of-type(2) {
 			top: $top*1+1;
 		}
-		&:nth-of-type(3){
+
+		&:nth-of-type(3) {
 			top: $top*2+1;
 		}
+
 	}
+
 }
 
 .zmiti-main-ui {
 	height: 100%;
+	overflow: hidden;
+
+	&>div {
+		@include transition_transform(1s linear);
+	}
+
+	.zmiti-tigger {
+		@include pos(a);
+		width: 2rem;
+		bottom: .4rem;
+		left: 4rem;
+		z-index: 1000;
+		@include transform3d;
+		@include transition(1s);
+		@include transitionTimingFunction(cubic-bezier(0, 1.13, 0.89, 1.08));
+
+		&.left {
+		}
+
+		&:before {
+			content: '';
+			width: 2rem;
+			height: 2rem;
+			@include br();
+			background: rgba(0, 0, 0, .2);
+			@include pos(a);
+			bottom: 0;
+			left: 0;
+			@include transform(rotateX(80deg) translateY(1rem));
+			@include transformOrigin(bottom);
+		}
+
+	}
+
 }
 
 .zmiti-q-item {
@@ -89,14 +212,20 @@ img {
 	height: 100%;
 	@include pos(r);
 	z-index: 10;
-	
+	@include transform3d;
 }
 
 .zmiti-main-q-header {
+	&.hide {
+		@include transition(1s .4s);
+		@include transform(rotateX(90deg));
+		@include transformOrigin(bottom);
+		opacity: 0;
+	}
+
 	width: 8rem;
 	margin: 0 auto;
 	color: #fff;
-
 	line-height: 1.5;
 	font-size: 12px;
 	padding: 1rem .8rem .6rem;
@@ -108,7 +237,7 @@ img {
 	overflow: hidden;
 	top: .4rem;
 
-	.zmiti-num{
+	.zmiti-num {
 		@include pos(a);
 		width: 100%;
 		text-align: center;
@@ -133,6 +262,101 @@ img {
 		bottom: .4rem;
 		width: 90%;
 		height: 100%;
+	}
+
+}
+
+.zmiti-over-C {
+	@include pos(f);
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	background: rgba(0, 0, 0, .6);
+	@include displayBox(horizontal);
+
+	.zmiti-over {
+		width: 8rem;
+		@include pos(r);
+		color: #ef5e30;
+
+		.zmiti-unit {
+			@include pos(a);
+			top: 3.55rem;
+			left: 52%;
+			font-size: 12px;
+		}
+
+		&.over1 {
+			.zmiti-result-score {
+				top: 4.5rem;
+			}
+
+			.zmiti-unit {
+				top: 4.55rem;
+			}
+
+		}
+
+		&.over2 {
+			color: #8a8a8a;
+
+			.zmiti-result-score {
+				top: 4.5rem;
+			}
+
+			.zmiti-unit {
+				top: 4.65rem;
+			}
+
+		}
+
+		&.over3 {
+			.zmiti-result-score {
+				top: 4.5rem;
+			}
+
+			.zmiti-unit {
+				top: 4.55rem;
+			}
+
+		}
+
+		.zmiti-result-score {
+			width: .6rem;
+			font-family: Georgia;
+			height: .6rem;
+			font-size: .6rem;
+			overflow: hidden;
+			line-height: .6rem;
+			@include pos(a);
+			left: 50%;
+			margin-left: -.6rem;
+			z-index: 10;
+			border: 1px solid transparent;
+			top: 3.4rem;
+			text-align: center;
+
+			&>span {
+				@include transition(.3s);
+				display: inline-block;
+				//@include transform(translate3d(0, -.6rem, 0));
+			}
+
+		}
+
+	}
+
+	.zmiti-over-btns {
+		width: 8rem;
+		margin: .4rem auto;
+		text-align: center;
+
+		img {
+			width: 3.5rem;
+		}
+
 	}
 
 }
