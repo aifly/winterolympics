@@ -2,7 +2,13 @@ var imgs = {
 	topSnow: './assets/images/top-snow.png',
 	dong: './assets/images/dong.png',
 	answers: './assets/images/answer.png',
+	answers1: './assets/images/answer1.png',
 	snow: './assets/images/snow.png',
+	snow1: './assets/images/snow1.png',
+	bg1: './assets/images/bg1.png',
+	bg2: './assets/images/bg2.png',
+	bg3: './assets/images/bg3.png',
+	bg4: './assets/images/bg4.png',
 	tigger: './assets/images/tigger.png',
 	tiggerSuccess: './assets/images/tigger.png',
 	tiggerError: './assets/images/tigger-error.png',
@@ -16,8 +22,12 @@ var imgs = {
 	share: './assets/images/share.png',
 	title: './assets/images/title.png',
 	start: './assets/images/start.png',
+	startbg: './assets/images/startbg.png',
 	tree1: './assets/images/tree1.png',
 	tree2: './assets/images/tree2.png',
+	arrow: './assets/images/arrow.png',
+	play: './assets/images/play.png',
 	index: './assets/images/index.jpg',
+
 }
 export default imgs;

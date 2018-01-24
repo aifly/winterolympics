@@ -33,6 +33,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
+    "velocity-animate": "^1.5.1",
     "vue": "^2.5.13",
     "vue-hot-reload-api": "^2.2.4",
     "vue-html-loader": "^1.2.4",

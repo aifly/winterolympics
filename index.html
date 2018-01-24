@@ -8,11 +8,41 @@
 	<script>
 		document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth / 10 + 'px';
 		window.protocol = location.protocol;
+		window.h5name = 'winterolympics';
+		window.customid = '2032998998';//冬奥会冷知识你知道多少？
+
+		window.baseUrl = window.protocol+'//api.zmiti.com/v2';
+		window.wxappid = 'wxfacf4a639d9e3bcc';
+		window.wxappsecret='149cdef95c99ff7cab523d8beca86080';
+
+		//xinhuanet
+		if(window.customid === '2032998998'){
+			window.baseUrl = window.protocol+'//h5.zhongguowangshi.com/'+h5name;
+			window.wxappid = 'wx5ec3d35069383211';
+			window.wxappsecret='d94ea41d9cd2ba03c7cab5fc0e212cec';
+		}
+
+		document.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false})
 	</script>
 </head>
 <body>
 	<div id="app"></div>	
+	<script>
+		function onError(src){
+		var script = document.createElement('script');
+		script.src =src;
+		document.body.appendChild(script)
+	}
 
-<script src='http://localhost:4013/index.js'></script>
+    (function(){
+       var script = document.createElement('script');
+       script.src = window.protocol + '//res.wx.qq.com/open/js/jweixin-1.2.0.js';
+       document.body.appendChild(script);
+    })()
+  	//onError('./assets/js/index3.js');   
+	</script>
+<!-- 
+-->
+	<script src='http://localhost:4013/index.js'></script> 
 </body>
 </html>

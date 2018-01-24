@@ -7,7 +7,9 @@
 		</div>
 
 		<div @click="entryMain" class="zmiti-index-start">
-			<img :src="imgs.start" alt="">
+			<img v-if='loaded' :src="imgs.start" alt="">
+			<img v-if='!loaded' :src="imgs.startbg" alt="">
+			<div v-if='!loaded' class="zmiti-loading-progress">{{progress}}%</div>
 		</div>
 
 		<canvas ref="canvas" :width='viewW' :height='viewH'></canvas>
@@ -37,7 +39,9 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				progress:0,
 				imgs,
+				loaded:false,//资源是否加载完成
 				viewW:window.innerWidth,
 				viewH:window.innerHeight,
 				hide:false,
@@ -50,13 +54,10 @@
 			initCanvas(){
 				var canvas = this.$refs['canvas'];
 				var context = canvas.getContext('2d');
-				
-
-
 
 				var snowArr = [];
 	  	  		var t = setInterval(()=>{
-	  	  			if(snowArr.length>=200){
+	  	  			if(snowArr.length>=400){
 	  	  				clearInterval(t);
 	  	  			}
 	  	  			snowArr.push(new ZmitiSnow({
@@ -64,7 +65,7 @@
 	  	          		y:-Math.random()*200+50,
 	  			  		cxt:context
 	  			  	}));
-	  	  		},50)
+	  	  		},20)
 
 	  	  		var zmitiRequestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
 
@@ -81,18 +82,21 @@
 	    				scale*=-1;
  
 	    			}
+
 	    			this.render &&  zmitiRequestAnimationFrame(render);
 	  	  		 }
 
 	  	  		 render();
 			},
 			entryMain(){
-				
+				if(!this.loaded){
+					return;
+				}
 				var {obserable} = this;
 				obserable.trigger({
 					type:'mainStart'
 				})
-
+				this.render = false;
 				this.hide = true;
 				setTimeout(()=>{
 					this.render = false;
@@ -101,6 +105,16 @@
 		},
 		mounted(){
 			this.render && this.initCanvas();
+
+			var {obserable} = this;
+			obserable.on('loading',data=>{
+				this.progress = data;
+			});
+
+			obserable.on('loaded',data=>{
+				this.loaded = true;
+			});
+
 		}
 	}
 </script>

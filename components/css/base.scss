@@ -126,3 +126,25 @@
   text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis;
 }
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  @include br();
+  @include pos(f);
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+
+  &.rotate {
+    @include animation(rotate 5s linear infinite);
+  }
+
+}
+
+@-webkit-keyframes rotate {
+  to {
+    @include transform(rotate(360deg));
+  }
+
+}

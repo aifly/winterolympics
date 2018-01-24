@@ -2,7 +2,7 @@
   	  <section class="zmiti-main-ui lt-full"  ref='zmiti-main-ui'>
   	  		<div :style="{height:(viewH*list.length-27*viewW/10)+'px',WebkitTransform:
           'translate3d(0,'+(index-1)*(viewH-3*viewW/10)+'px,0)'}">
-             <div v-for='(item,i) in list' class="zmiti-q-item " :style="{height:viewH+'px',background:'url(../assets/images/bg'+(i%4+1)+'.png) no-repeat center 110%',backgroundSize:'cover',top:(-i)*3+'rem',WebkitTransform:'translate3d(0,'+-(viewH*list.length-27*viewW/10 - viewH)+'px,0)'}">
+             <div v-for='(item,i) in list' class="zmiti-q-item " :style="{height:viewH+'px',background:'url(./assets/images/bg'+(i%4+1)+'.png) no-repeat center 110%',backgroundSize:'cover',top:(-i)*3+'rem',WebkitTransform:'translate3d(0,'+-(viewH*list.length-27*viewW/10 - viewH)+'px,0)'}">
                 
                 <header class="zmiti-main-q-header" :class="{'hide':i>iNow}">
                   <img :src='imgs.topSnow'/>
@@ -10,10 +10,9 @@
                   {{item.title}}
                 </header>
                 <ul class="zmiti-a-list" :class="{'show':iNow===i}">
-                   <li @click='chooseAnswer(j,i)' :class='{"left":j%2===0,"right":j%2===1}' v-for='(an,j) in item.answers' :style="answerStyle">
-                      <img :src='imgs.snow' class="zmiti-snow-img"  />
-                      <img :src='imgs.dong'/>
-                      <span>{{answerItem[i]}}</span>
+                   <li @click='chooseAnswer(j,i)' :class='{"left":j%2===0,"right":j%2===1}' v-for='(an,j) in item.answers' :style="item.isBig?answerStyle1:answerStyle">
+                      <img :src='item.isBig?imgs.snow1:imgs.snow' class="zmiti-snow-img"  />
+                      <span>{{answerItem[j]}} </span>
                       <span>{{an}}</span>
                       <div v-if='iNow === i && clickIndex === j' class="zmiti-snow" v-for='(s,k) in snowArr' :style='{left:(k+2)*.13+"rem",WebkitTransform:"translate3d("+s.transX+"px,"+s.transY+"px,0)",opacity:s.opacity}'>
                           
@@ -37,9 +36,9 @@
               <span class="zmiti-time">{{time}}</span>
           </div>
 
-          <div class="zmiti-tigger" :style="{WebkitTransform:'translate3d('+triggerTransX+'rem,'+triggerTransY+'rem,0)'}">
+          <section ref='tigger' class="zmiti-tigger" :style="{WebkitTransform:'translate3d('+triggerTransX+'rem,'+triggerTransY+'rem,0)'}">
             <img :src='imgs.tigger'/>
-          </div>
+          </section>
 
           <div v-if='gameover' class="zmiti-over-C">
               <div class="zmiti-over" :class='rightAnswer.key'>
@@ -56,11 +55,17 @@
                     <span class="zmiti-unit">题</span>
                   </div>
                   <div class="zmiti-over-btns">
-                     <span><img :src="imgs.restart" alt=""></span>
-                     <span><img :src="imgs.share" alt=""></span>
+                     <span @click='restart'><img :src="imgs.restart" alt=""></span>
+                     <span @click="showMask=true"><img :src="imgs.share" alt=""></span>
                   </div>
               </div>
           </div>
+
+          <div @touchstart='showMask=false' v-if='showMask' class="zmiti-mask">
+              <img :src='imgs.arrow'/>
+          </div>
+          <audio :src='success'  ref='success' ></audio>
+          <audio :src='error'  ref='error' ></audio>
   	  </section>
 </template>
 
@@ -70,6 +75,9 @@ import QList from './data.js';
 import imgs  from './assets.js';
 import $ from 'jquery';
 import ZmitiSnow from './snow.js';
+import zmitiUtil from './methods.js'
+import Velocity  from 'velocity-animate';
+
 var list = [];
 
 var questionLen = 10;
@@ -100,6 +108,9 @@ export default {
   },
   data(){
   	return {
+      showMask:false,
+      success: './assets/music/success.mp3',
+      error: './assets/music/error.mp3',
       rightAnswer:{
         count:2,
         key:'over3'
@@ -126,12 +137,17 @@ export default {
       viewH:document.documentElement.clientHeight,
   		viewW:document.documentElement.clientWidth,
       snows:[],
+      answerStyle1:{
+        background:'url('+imgs.answers1+') no-repeat center top',
+        backgroundSize:'contain',
+        minWidth:7.1+'rem'
+      },
       answerStyle:{
         background:'url('+imgs.answers+') no-repeat center top',
         backgroundSize:'contain'
       },
   		imgs,
-      score:10,
+      score:0,
       seconds:0,
       time:'00:00'
   	}
@@ -139,10 +155,19 @@ export default {
   methods:{
     chooseAnswer(i,index){
 
-
       if(index === this.lastIndex){
         return;
       }
+
+      Velocity(this.$refs['tigger'], {
+          left:50
+      }, {
+          duration: 1000,
+          easing: [ 0.17, 0.67, 0.83, 0.67 ]
+      });
+
+    return;
+
       this.imgs.tigger = this.imgs.jump;
       this.choosed = true;
       this.triggerTransX = i%2===0?-3:3;
@@ -160,12 +185,14 @@ export default {
           this.triggerTransX = this.triggerTransY = 0;
         },1500);
       if(this.list[this.iNow].right === i){
+
+        this.$refs['success'].play();
         this.score +=1;//回答正确
          setTimeout(()=>{
           this.imgs.tigger = this.imgs.tiggerSuccess;          
         },2000)
       }else{//回答错误
-
+        this.$refs['error'].play();
         setTimeout(()=>{
           this.imgs.tigger = this.imgs.tiggerError;
         },1000)
@@ -200,14 +227,46 @@ export default {
           }
           
       })
-      
-
+    },
+    restart(){
+      window.location.href = window.location.href;
     },
     computedINow(){
       setTimeout(()=>{
         this.index+=1;
         if(this.index > this.questionLen){
           this.index = this.questionLen;
+
+          this.rightAnswer = {
+            count:this.score,
+            key:'over'
+          }
+          this.gameover = true;
+        /*
+         0-3 over3
+         4-6 over2
+         7-9 over1
+         10  over
+        */
+          if(this.score<10){
+            this.rightAnswer.key = 'over1'
+          }
+          if(this.score<7){
+            this.rightAnswer.key ='over2'
+          }
+          if(this.score<4){
+           this.rightAnswer.key ='over3' 
+          }
+
+          var scale = '99';
+          scale = (Math.random()*10+(this.score-1)*10).toFixed(1);
+          switch(this.score){
+            case 0:
+            scale = 0;
+            break;
+          }
+
+          zmitiUtil.wxConfig('我答对了'+this.score+'题，击败了'+scale+'%的网友，邀你PK一下','邀你PK一下');
           return;
         }
         this.iNow = this.questionLen - this.index;
@@ -236,21 +295,21 @@ export default {
       zmitiRequestAnimationFrame(render);
     }
 
-
-    render();
-
     var {obserable} = this;
     obserable.on('mainStart',()=>{
       render();
+       var timer = setInterval(()=>{
+          this.seconds++;
+          var sec = this.seconds % 60;
+          var min = this.seconds / 60 | 0;
+          this.time = (min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
+      },1000);
+      this.computedINow()
     })
-    var timer = setInterval(()=>{
-        this.seconds++;
-        var sec = this.seconds % 60;
-        var min = this.seconds / 60 | 0;
-        this.time = (min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
-    },1000);
+    
+    zmitiUtil.wxConfig(document.title,'邀你PK一下','');
 
-    this.computedINow()
+    
 
   },
   components: {
