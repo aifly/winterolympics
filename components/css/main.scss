@@ -118,10 +118,37 @@ img {
 	li {
 		&.left {
 			left: -.3rem;
+
+			.zmiti-result {
+				width: .8rem;
+				@include pos(a);
+				right: -.5rem;
+				top: 0;
+			}
+
 		}
 
 		&.right {
 			right: -.3rem;
+
+			.zmiti-result {
+				width: .8rem;
+				@include pos(a);
+				left: -.5rem;
+				top: 0;
+			}
+
+		}
+
+		&.hide {
+			@include animation(hide .3s .5s 4  alternate);
+		}
+
+		@-webkit-keyframes hide {
+			to {
+				opacity: 0;
+			}
+
 		}
 
 		.zmiti-snow {

@@ -132,8 +132,24 @@ img {
     position: absolute; }
     .zmiti-a-list li.left {
       left: -.3rem; }
+      .zmiti-a-list li.left .zmiti-result {
+        width: .8rem;
+        position: absolute;
+        right: -.5rem;
+        top: 0; }
     .zmiti-a-list li.right {
       right: -.3rem; }
+      .zmiti-a-list li.right .zmiti-result {
+        width: .8rem;
+        position: absolute;
+        left: -.5rem;
+        top: 0; }
+    .zmiti-a-list li.hide {
+      -webkit-animation: hide 0.3s 0.5s 4 alternate;
+      animation: hide 0.3s 0.5s 4 alternate; }
+@-webkit-keyframes hide {
+  to {
+    opacity: 0; } }
     .zmiti-a-list li .zmiti-snow {
       width: 4px;
       height: 4px;

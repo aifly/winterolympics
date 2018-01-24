@@ -10,10 +10,12 @@
                   {{item.title}}
                 </header>
                 <ul class="zmiti-a-list" :class="{'show':iNow===i}">
-                   <li @click='chooseAnswer(j,i)' :class='{"left":j%2===0,"right":j%2===1}' v-for='(an,j) in item.answers' :style="item.isBig?answerStyle1:answerStyle">
-                      <img :src='item.isBig?imgs.snow1:imgs.snow' class="zmiti-snow-img"  />
+                   <li @click='chooseAnswer($event,j,i)' :class='{"left":j%2===0,"right":j%2===1,"hide":item.answers1[j].hide}' v-for='(an,j) in item.answers' :style="item.answerStyle[j]">
+                      <img :src='item.snow[j]' class="zmiti-snow-img"  />
                       <span>{{answerItem[j]}} </span>
                       <span>{{an}}</span>
+                      <span class="zmiti-result" v-if='j===item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.right" alt=""></span>
+                      <span class="zmiti-result" v-if='j!==item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.error" alt=""></span>
                       <div v-if='iNow === i && clickIndex === j' class="zmiti-snow" v-for='(s,k) in snowArr' :style='{left:(k+2)*.13+"rem",WebkitTransform:"translate3d("+s.transX+"px,"+s.transY+"px,0)",opacity:s.opacity}'>
                           
                       </div>
@@ -35,8 +37,8 @@
               </span>
               <span class="zmiti-time">{{time}}</span>
           </div>
-
-          <section ref='tigger' class="zmiti-tigger" :style="{WebkitTransform:'translate3d('+triggerTransX+'rem,'+triggerTransY+'rem,0)'}">
+           <!-- :style="{WebkitTransform:'translate3d('+triggerTransX+'rem,'+triggerTransY+'rem,0)'}" -->
+          <section ref='tigger' class="zmiti-tigger">
             <img :src='imgs.tigger'/>
           </section>
 
@@ -111,6 +113,7 @@ export default {
       showMask:false,
       success: './assets/music/success.mp3',
       error: './assets/music/error.mp3',
+      clickItmeIndex:-1,
       rightAnswer:{
         count:2,
         key:'over3'
@@ -123,6 +126,7 @@ export default {
         */
       },//回答正确的个数 
   		list,
+      isRight:-1,
       questionLen,
       triggerTransX:0,
       triggerTransY:0,
@@ -153,53 +157,121 @@ export default {
   	}
   },
   methods:{
-    chooseAnswer(i,index){
+    chooseAnswer(e,i,index){
+
+      var X = e.clientX;
 
       if(index === this.lastIndex){
         return;
       }
 
-      Velocity(this.$refs['tigger'], {
+
+     /* Velocity(this.$refs['tigger'], {
           left:50
       }, {
           duration: 1000,
           easing: [ 0.17, 0.67, 0.83, 0.67 ]
-      });
+      });*/
 
-    return;
+      var s = this;
 
       this.imgs.tigger = this.imgs.jump;
       this.choosed = true;
-      this.triggerTransX = i%2===0?-3:3;
+
+
+      this.clickItmeIndex = i;
+     /* this.triggerTransX = i%2===0?-3:3;
       this.triggerTransY = ((2-i) * 3 + 3.82)*-1;
 
-      this.lastIndex = index;
-      setTimeout(()=>{
-        this.computedINow();
-      },3000)
+*/
 
-      setTimeout(()=>{
-        this.clickIndex = i;//
-      },1000)
-      setTimeout(()=>{
+      this.lastIndex = index;
+    
+ 
+     /* setTimeout(()=>{
           this.triggerTransX = this.triggerTransY = 0;
-        },1500);
+        },1500);*/
+
+      var tigger = this.$refs['tiggger']
       if(this.list[this.iNow].right === i){
 
         this.$refs['success'].play();
         this.score +=1;//回答正确
+
+        this.list[this.iNow].answerStyle[i] = {
+          background: 'url(' + imgs.answers1 + ') no-repeat center top',
+          'background-size': 'contain'
+        }
+         Velocity(this.$refs['tigger'], {
+            translateX:i%2===0?2*-s.viewW/10:2*s.viewW/10,
+            translateY:((2-i) * 3 + 3.82)*-1*s.viewW/10
+        }, {
+            duration: 1000,
+            easing:[0.58, 1.24, 0.98, 1.28],
+            complete:()=>{
+
+              s.clickIndex = i;
+
+
+              Velocity(this.$refs['tigger'], {
+                translateX:0,
+                translateY:0
+               }, {
+                delay:400,
+                duration: 1000,
+                begin:()=>{
+                   s.computedINow();
+                },
+                complete:()=>{
+                   
+                }
+            });
+            }
+            //easing:
+        });
+
+
          setTimeout(()=>{
           this.imgs.tigger = this.imgs.tiggerSuccess;          
         },2000)
       }else{//回答错误
         this.$refs['error'].play();
-        setTimeout(()=>{
-          this.imgs.tigger = this.imgs.tiggerError;
-        },1000)
+         this.list[this.iNow].answerStyle[i] = {
+          background: 'url(' + imgs.answers2 + ') no-repeat center top',
+          'background-size': 'contain'
+        }
 
-        setTimeout(()=>{
-          this.imgs.tigger = this.imgs.tiggerSuccess;          
-        },2000)
+         this.list[this.iNow].answers1[i].hide = true;
+         Velocity(this.$refs['tigger'], {
+            translateX:i%2===0?-2*s.viewW/10:2*s.viewW/10,
+            translateY:((2-i) * 3 + 3.82)*-1*s.viewW/10
+        }, {
+            duration: 1000,
+            complete:()=>{
+
+              Velocity(this.$refs['tigger'], {
+                translateX:(i%2===0?-2*s.viewW/10:2*s.viewW/10)*1.5,
+                translateY:0
+              }, {
+                duration: 1000,
+                complete:()=>{
+                  s.imgs.tigger = this.imgs.tiggerError;
+                  s.computedINow();
+                  Velocity(this.$refs['tigger'], {
+                      translateX:0,
+                      translateY:0
+                    }, {
+                      duration: 1000,
+                      complete:()=>{
+                          this.imgs.tigger = this.imgs.tiggerSuccess;          
+                      }
+                  });
+                }
+            });
+            }
+            //easing: [ 0.17, 0.67, 0.83, 0.67 ]
+        });
+
 
       }
     },
@@ -221,7 +293,6 @@ export default {
                 h.transX = 0;
                 h.transY = 0;
               })
-
             }
             
           }
@@ -234,6 +305,7 @@ export default {
     computedINow(){
       setTimeout(()=>{
         this.index+=1;
+        this.clickItmeIndex = -1;
         if(this.index > this.questionLen){
           this.index = this.questionLen;
 
@@ -281,7 +353,7 @@ export default {
         clearInterval(t);
       }
      this.snows.push(new ZmitiSnow()); 
-    },100)
+    },50)
 
 
     var zmitiRequestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;

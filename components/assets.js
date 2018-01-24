@@ -3,6 +3,10 @@ var imgs = {
 	dong: './assets/images/dong.png',
 	answers: './assets/images/answer.png',
 	answers1: './assets/images/answer1.png',
+	answers2: './assets/images/answer2.png',
+	answerbig: './assets/images/answerbig.png',
+	answerbig1: './assets/images/answerbig1.png',
+	answerbig2: './assets/images/answerbig2.png',
 	snow: './assets/images/snow.png',
 	snow1: './assets/images/snow1.png',
 	bg1: './assets/images/bg1.png',
@@ -27,6 +31,8 @@ var imgs = {
 	tree2: './assets/images/tree2.png',
 	arrow: './assets/images/arrow.png',
 	play: './assets/images/play.png',
+	right: './assets/images/right.png',
+	error: './assets/images/error.png',
 	index: './assets/images/index.jpg',
 
 }
