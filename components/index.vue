@@ -12,6 +12,19 @@
 
 		<canvas ref="canvas" :width='viewW' :height='viewH'></canvas>
 
+		<div class="zmiti-tree1">
+			<img :src="imgs.tree1" alt="">
+		</div>
+
+
+		<div class="zmiti-tree2">
+			<img :src="imgs.tree2" alt="">
+		</div>
+
+		<div class="zmiti-snows" :style="{opacity:snowOpacity,WebkitTransform:'scaleY('+scaleY+')'}">
+			
+		</div>
+
 	</div>
 </template>
 
@@ -28,7 +41,9 @@
 				viewW:window.innerWidth,
 				viewH:window.innerHeight,
 				hide:false,
-				render:false,
+				render:true,
+				snowOpacity:0,
+				scaleY:1,
 			}
 		},
 		methods:{
@@ -54,18 +69,22 @@
 	  	  		var zmitiRequestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
 
 	  	  		var rem = this.viewW/10;
+	  	  		var scale = .002;
+
 	  	  		var render =()=>{
 	  	  		 	context.clearRect(0, 0, this.viewW, this.viewH)
 	    			 snowArr.forEach(snow=>{
 		  				snow.alive && snow.fly()
 		  			});
-
+	    			this.snowOpacity+=scale;
+	    			if(this.snowOpacity>=1 || this.snowOpacity<=0){
+	    				scale*=-1;
+ 
+	    			}
 	    			this.render &&  zmitiRequestAnimationFrame(render);
 	  	  		 }
 
 	  	  		 render();
-
-
 			},
 			entryMain(){
 				

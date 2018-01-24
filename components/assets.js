@@ -16,6 +16,8 @@ var imgs = {
 	share: './assets/images/share.png',
 	title: './assets/images/title.png',
 	start: './assets/images/start.png',
+	tree1: './assets/images/tree1.png',
+	tree2: './assets/images/tree2.png',
 	index: './assets/images/index.jpg',
 }
 export default imgs;

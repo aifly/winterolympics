@@ -33,6 +33,32 @@
 		top: 0;
 	}
 
+	.zmiti-tree1, .zmiti-tree2 {
+		@include pos(a);
+		width: 4.6rem;
+		bottom: .2rem;
+		right: -.5rem;
+	}
+
+	.zmiti-tree2 {
+		left: 0;
+		right: auto;
+		width: 9rem;
+		bottom: 2.4rem;
+	}
+
+	.zmiti-snows {
+		@include transformOrigin(top);
+		width: 100%;
+		height: 6rem;
+		background: #fff;
+		z-index: -1;
+		opacity: 0;
+		bottom: 0;
+		@include pos(a);
+		left: 0;
+	}
+
 	.zmiti-road {
 		display: none;
 		width: 15rem;

@@ -47,6 +47,27 @@
     position: absolute;
     left: 0;
     top: 0; }
+  .zmiti-index-main-ui .zmiti-tree1, .zmiti-index-main-ui .zmiti-tree2 {
+    position: absolute;
+    width: 4.6rem;
+    bottom: .2rem;
+    right: -.5rem; }
+  .zmiti-index-main-ui .zmiti-tree2 {
+    left: 0;
+    right: auto;
+    width: 9rem;
+    bottom: 2.4rem; }
+  .zmiti-index-main-ui .zmiti-snows {
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    width: 100%;
+    height: 6rem;
+    background: #fff;
+    z-index: -1;
+    opacity: 0;
+    bottom: 0;
+    position: absolute;
+    left: 0; }
   .zmiti-index-main-ui .zmiti-road {
     display: none;
     width: 15rem;

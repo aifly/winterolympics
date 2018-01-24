@@ -117,7 +117,7 @@ export default {
       triggerTransY:0,
       clickIndex:-1,//点击的索引。
       iNow:-1, 
-      gameover:true,
+      gameover:false,
       scoreNum:new Array(11),
       index:0,
       snowArr,
