@@ -20,7 +20,7 @@ var imgs = {
 	jump: './assets/images/jump.png',
 	over: './assets/images/over.png',
 	over1: './assets/images/over1.png',
-	over2: './assets/images/over2.png',
+	over2: './assets/images/over2-1.png',
 	over3: './assets/images/over3.png',
 	restart: './assets/images/restart1.png',
 	errorquestion: './assets/images/error-question-btn1.png',
