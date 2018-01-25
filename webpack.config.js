@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-
 var config = {
     entry: {
         'index': "./index.js",
@@ -31,9 +30,14 @@ var config = {
     },
 
     plugins: [
-        /* new webpack.optimize.CommonsChunkPlugin({
-            name:"vendor",  
-         }),*/
+
+
+        /*new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                drop_console: false,
+            }
+        })*/
     ],
     module: {
 

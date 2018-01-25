@@ -32,6 +32,8 @@
     "less-loader": "^2.2.2",
     "less-plugin-clean-css": "^1.5.1",
     "style-loader": "^0.13.0",
+    "uglify-js": "^3.3.8",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.5.7",
     "velocity-animate": "^1.5.1",
     "vue": "^2.5.13",

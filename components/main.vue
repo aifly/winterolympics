@@ -1,9 +1,10 @@
 <template>
-  	  <section class="zmiti-main-ui lt-full"  ref='zmiti-main-ui'>
-  	  		<div :style="{height:(viewH*list.length-27*viewW/10)+'px',WebkitTransform:
+      <section class="zmiti-main-ui lt-full"  ref='zmiti-main-ui'>
+            
+          <div :style="{height:(viewH*list.length-27*viewW/10)+'px',WebkitTransform:
           'translate3d(0,'+(index-1)*(viewH-3*viewW/10)+'px,0)'}">
              <div v-for='(item,i) in list' class="zmiti-q-item " :style="{height:viewH+'px',background:'url(./assets/images/bg'+(i%4+1)+'.png) no-repeat center 110%',backgroundSize:'cover',top:(-i)*3+'rem',WebkitTransform:'translate3d(0,'+-(viewH*list.length-27*viewW/10 - viewH)+'px,0)'}">
-                
+                <canvas :style="{WebkitTransform:'translate3d(0,'+(viewH*list.length-27*viewW/10 - viewH-(index-1)*(viewH-3*viewW/10))+'px,1px)'}" v-if='i===0'  :width='viewW' :height='viewH' ref='snow'></canvas>
                 <header class="zmiti-main-q-header" :class="{'hide':i>iNow}">
                   <img :src='imgs.topSnow'/>
                   <div class="zmiti-num">第{{numberList[questionLen-i-1]}}题</div>
@@ -16,17 +17,17 @@
                       <span>{{an}}</span>
                       <span class="zmiti-result" v-if='j===item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.right" alt=""></span>
                       <span class="zmiti-result" v-if='j!==item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.error" alt=""></span>
-                      <div v-if='iNow === i && clickIndex === j' class="zmiti-snow" v-for='(s,k) in snowArr' :style='{left:(k+2)*.13+"rem",WebkitTransform:"translate3d("+s.transX+"px,"+s.transY+"px,0)",opacity:s.opacity}'>
+                      <!-- <div v-if='iNow === i && clickIndex === j' class="zmiti-snow" v-for='(s,k) in snowArr' :style='{left:(k+2)*.13+"rem",WebkitTransform:"translate3d("+s.transX+"px,"+s.transY+"px,0)",opacity:s.opacity}'>
                           
-                      </div>
+                      </div> -->
                    </li>
                 </ul>
 
               </div>   
           </div>
-          <div v-for='snow in snows' v-html='snow.html'>
+          <!-- <div v-for='snow in snows' v-html='snow.html'>
             
-          </div>
+          </div> -->
 
           <div class="zmiti-score">
               <img :src='imgs.score' />
@@ -39,13 +40,14 @@
           </div>
            <!-- :style="{WebkitTransform:'translate3d('+triggerTransX+'rem,'+triggerTransY+'rem,0)'}" -->
           <section ref='tigger' class="zmiti-tigger">
-            <img :src='imgs.tigger'/>
+            <img :src='imgs.tigger' :style='{WebkitTransform:"rotateY("+(clickIndex%2===0?180:0)+"deg)"}'/>
           </section>
 
-          <div v-if='gameover' class="zmiti-over-C">
+          <div v-if='gameover && !showErrorList' class="zmiti-over-C">
               <div class="zmiti-over" :class='rightAnswer.key'>
                   <div>
                     <img :src="imgs[rightAnswer.key]" alt="" />
+                    <span class="zmiti-result-text">答对</span>
                     <div class="zmiti-result-score" >
                       <span :style="{WebkitTransform:'translate3d(0,'+-(rightAnswer.count*.6)+'rem,0)'}">
                           <label v-for='(label,i) in new Array(11)'>
@@ -59,7 +61,38 @@
                   <div class="zmiti-over-btns">
                      <span @click='restart'><img :src="imgs.restart" alt=""></span>
                      <span @click="showMask=true"><img :src="imgs.share" alt=""></span>
+                     <span @click='lookErrorList'><img :src="imgs.errorquestion" alt=""></span>
                   </div>
+              </div>
+
+              <div class="zmiti-copyright">
+                  <img :src="imgs.logo" alt="">
+                  <div>新华社客户端</div>
+                  <div>新华社体育部、新华社摄影部、新华社新媒体中心联合出品</div>
+
+              </div>
+          </div>
+
+
+          <div class="zmiti-error-list lt-full" v-show='showErrorList'>
+             <div class="zmiti-error-title"><img :src='imgs.errorQuestionTitle'/></div>
+             <div class="zmiti-error-bg">
+                <img :src='imgs.errorListBg'/>
+             </div>
+             <div class="zmiti-error-content" ref='error-content'>
+                <ul>
+                  <li v-for='(question,i) in errorList'>
+                     <div>{{i+1}}.{{question.title}}</div>
+                     <div class="zmiti-error-answer " :class='{"horizontal":question.horizontal}'>
+                        <div :class="{'right':k===question.right}" v-for='(answer,k) in question.answers'>
+                           {{answerItem[k]}}.{{answer}}<img v-if='k===question.right' :src='imgs.right'/>
+                        </div>
+                     </div>
+                  </li>
+                </ul>
+             </div>
+             <div @click='showErrorList=false' class="zmiti-back">
+                <img :src='imgs.back'/>
               </div>
           </div>
 
@@ -76,9 +109,10 @@ import './css/main.css';
 import QList from './data.js';
 import imgs  from './assets.js';
 import $ from 'jquery';
-import ZmitiSnow from './snow.js';
+import ZmitiSnow from './zmitisnow.js';
 import zmitiUtil from './methods.js'
 import Velocity  from 'velocity-animate';
+import IScroll from 'iscroll';
 
 var list = [];
 
@@ -114,8 +148,10 @@ export default {
       success: './assets/music/success.mp3',
       error: './assets/music/error.mp3',
       clickItmeIndex:-1,
+      errorList:[],
+      showErrorList:false,
       rightAnswer:{
-        count:2,
+        count:0,
         key:'over3'
 
         /*
@@ -153,10 +189,22 @@ export default {
   		imgs,
       score:0,
       seconds:0,
-      time:'00:00'
+      time:'00:00',
+      jumpSnowArr:[]
   	}
   },
   methods:{
+
+    lookErrorList(){
+       this.showErrorList = true;
+
+
+       this.scroll = new IScroll(this.$refs['error-content'])
+       setTimeout(()=>{
+         this.scroll.refresh();
+       },100)
+
+    },
     chooseAnswer(e,i,index){
 
       var X = e.clientX;
@@ -186,7 +234,8 @@ export default {
 */
 
       this.lastIndex = index;
-    
+      
+        s.clickIndex = i;
  
      /* setTimeout(()=>{
           this.triggerTransX = this.triggerTransY = 0;
@@ -197,6 +246,15 @@ export default {
 
         this.$refs['success'].play();
         this.score +=1;//回答正确
+
+
+
+        var canvas = this.$refs['snow'][0];
+         var context = canvas.getContext('2d');
+        
+         var rem = this.viewW/10;
+       
+       
 
         this.list[this.iNow].answerStyle[i] = {
           background: 'url(' + imgs.answers1 + ') no-repeat center top',
@@ -210,7 +268,17 @@ export default {
             easing:[0.58, 1.24, 0.98, 1.28],
             complete:()=>{
 
-              s.clickIndex = i;
+            
+
+               for(var k=0;k<100;k++){
+
+                  this.jumpSnowArr.push(new ZmitiSnow({
+                      x:i%2===0?Math.random()*this.viewW*.5:Math.random()*this.viewW*.5+this.viewW*.5,
+                      y:this.viewH*.3+((i)*3+1)*rem-5,
+                      cxt:context,
+                      //color:'rgba(0,0,0,'+Math.random() + .3+')'
+                    }))
+                }
 
 
               Velocity(this.$refs['tigger'], {
@@ -234,8 +302,15 @@ export default {
          setTimeout(()=>{
           this.imgs.tigger = this.imgs.tiggerSuccess;          
         },2000)
+
       }else{//回答错误
         this.$refs['error'].play();
+
+         this.errorList.push(this.list[this.iNow])
+
+
+
+          
          this.list[this.iNow].answerStyle[i] = {
           background: 'url(' + imgs.answers2 + ') no-repeat center top',
           'background-size': 'contain'
@@ -250,7 +325,7 @@ export default {
             complete:()=>{
 
               Velocity(this.$refs['tigger'], {
-                translateX:(i%2===0?-2*s.viewW/10:2*s.viewW/10)*1.5,
+                translateX:(i%2===0?-2*s.viewW/10:2*s.viewW/10)*2,
                 translateY:0
               }, {
                 duration: 1000,
@@ -276,28 +351,61 @@ export default {
       }
     },
     snowAnimate(i){
-      this.snowsProticles = $('.zmiti-a-list:eq('+this.iNow+') li').eq(i).find('.zmiti-snow');
-      var k=0;
-      this.snowsProticles.each((i,item)=>{
-          item.spX = item.spX === undefined ? (Math.random()*3+3) *(Math.random()-.5>0?1:-1) : item.spX;
-          item.spY = item.spY === undefined ? -(Math.random()*10+3):item.spY;
-          item.spY++;
+      /*
+        this.snowsProticles = $('.zmiti-a-list:eq('+this.iNow+') li').eq(i).find('.zmiti-snow');
+        var k=0;
+        this.snowsProticles.each((i,item)=>{
+            item.spX = item.spX === undefined ? (Math.random()*3+3) *(Math.random()-.5>0?1:-1) : item.spX;
+            item.spY = item.spY === undefined ? -(Math.random()*10+3):item.spY;
+            item.spY++;
 
-          this.snowArr[i].transX +=item.spX;
-          this.snowArr[i].transY += item.spY;
-          if(this.snowArr[i].transY>this.viewH){
-            k++;
-            if(k>=snowCount){
-              this.clickIndex = -1;
-              this.snowArr.forEach((h,sn)=>{
-                h.transX = 0;
-                h.transY = 0;
-              })
+            this.snowArr[i].transX +=item.spX;
+            this.snowArr[i].transY += item.spY;
+            if(this.snowArr[i].transY>this.viewH){
+              k++;
+              if(k>=snowCount){
+                this.clickIndex = -1;
+                this.snowArr.forEach((h,sn)=>{
+                  h.transX = 0;
+                  h.transY = 0;
+                })
+              }
+              
             }
-            
-          }
           
-      })
+      })*/
+
+        var canvas = this.$refs['snow'][0];
+
+        var context = canvas.getContext('2d');
+
+        var snowArr = [];
+          var t = setInterval(()=>{
+            if(snowArr.length>=200){
+              clearInterval(t);
+            }
+
+            snowArr.push(new ZmitiSnow({
+              x:Math.random()*this.viewW,
+              y:-Math.random()*200+50,
+              cxt:context
+            }));
+          },20)
+
+
+          return ()=>{
+              context.clearRect(0, 0, this.viewW, this.viewH)
+              
+               snowArr.forEach(snow=>{
+                  snow.fly()
+              });
+
+              this.jumpSnowArr.forEach(snow=>{
+                  snow.draw()
+              });
+          }
+
+
     },
     restart(){
       window.location.href = window.location.href;
@@ -306,6 +414,11 @@ export default {
       setTimeout(()=>{
         this.index+=1;
         this.clickItmeIndex = -1;
+
+         this.jumpSnowArr.forEach(snow=>{
+            snow = null;
+         });
+         this.jumpSnowArr.length = 0;
         if(this.index > this.questionLen){
           this.index = this.questionLen;
 
@@ -346,30 +459,44 @@ export default {
     }
   },
   mounted(){
-    var i =0 ;
-    var t = setInterval(()=>{
-      i++;
-      if(i>100){
-        clearInterval(t);
-      }
-     this.snows.push(new ZmitiSnow()); 
-    },50)
+   
 
+     var snowFn = ()=>{};
 
     var zmitiRequestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+    
     var render = ()=>{
-       this.snows.forEach((item,i)=>{
+       /*this.snows.forEach((item,i)=>{
         item.animate();
-      })
+      })*/
        if(this.clickIndex >-1){
-           this.snowAnimate(this.clickIndex);
-       }
+           
+       } 
+
+       var k = 0;
+
+       this.jumpSnowArr.forEach((item,i)=>{
+           item.spX = item.spX === undefined ? (Math.random()*3+3) *(Math.random()-.5>0?1:-1) : item.spX;
+           item.spY = item.spY === undefined ? -(Math.random()*10+3):item.spY;
+           item.spY++;
+
+           item.x += item.spX;
+           item.y += item.spY;
+           
+       })
+       snowFn();
       zmitiRequestAnimationFrame(render);
     }
+
+
+
 
     var {obserable} = this;
     obserable.on('mainStart',()=>{
       render();
+
+
+     snowFn = this.snowAnimate(this.clickIndex)
        var timer = setInterval(()=>{
           this.seconds++;
           var sec = this.seconds % 60;
@@ -381,7 +508,12 @@ export default {
     
     zmitiUtil.wxConfig(document.title,'邀你PK一下','');
 
+
+ 
+
     
+
+   
 
   },
   components: {

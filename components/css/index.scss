@@ -100,4 +100,12 @@
 		@include transform(rotate(-63deg));
 	}
 
+	.zmiti-logo {
+		width: 1rem;
+		@include pos(a);
+		right: .6rem;
+		bottom: .6rem;
+		z-index: -1;
+	}
+
 }

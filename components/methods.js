@@ -28,7 +28,7 @@ var zmitiUtil = {
 	},
 	wxConfig: function(title, desc, url, isDebug = false) {
 		var s = this;
-		var img = window.baseUrl + '/assets/images/300.jpg';
+		var img = window.baseUrl + '/assets/images/301.jpg';
 		//var appId = 'wxfacf4a639d9e3bcc'; //'wxfacf4a639d9e3bcc'; // data.wxappid; // 'wxfacf4a639d9e3bcc'; //data.wxappid;
 
 		var appId = this.wxInfo().wxappid;

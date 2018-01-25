@@ -27,6 +27,10 @@
 			
 		</div>
 
+		<div class="zmiti-logo">
+			<img :src='imgs.logo'/>
+		</div>
+
 	</div>
 </template>
 
@@ -80,7 +84,6 @@
 	    			this.snowOpacity+=scale;
 	    			if(this.snowOpacity>=1 || this.snowOpacity<=0){
 	    				scale*=-1;
- 
 	    			}
 
 	    			this.render &&  zmitiRequestAnimationFrame(render);

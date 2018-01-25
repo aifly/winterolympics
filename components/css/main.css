@@ -23,7 +23,7 @@
   height: .8rem;
   border-radius: 50%;
   position: fixed;
-  z-index: 1000;
+  z-index: 2000;
   right: .5rem;
   top: .5rem; }
   .zmiti-play.rotate {
@@ -114,13 +114,15 @@ img {
   position: absolute;
   bottom: 0rem;
   width: 100%;
-  font-size: 12px;
+  font-size: .375rem;
   height: 70vh;
   color: #fff;
   text-align: center;
   z-index: 10;
   left: 0;
-  overflow: hidden; }
+  overflow: hidden;
+  -webkit-transform: translateZ(10px);
+  transform: translateZ(10px); }
   .zmiti-a-list.show li .zmiti-snow-img {
     opacity: 1;
     -webkit-transition: 4s 1s;
@@ -145,8 +147,8 @@ img {
         left: -.5rem;
         top: 0; }
     .zmiti-a-list li.hide {
-      -webkit-animation: hide 0.3s 0.5s 4 alternate;
-      animation: hide 0.3s 0.5s 4 alternate; }
+      -webkit-animation: hide 0.22s 0.5s 5 alternate forwards;
+      animation: hide 0.22s 0.5s 5 alternate forwards; }
 @-webkit-keyframes hide {
   to {
     opacity: 0; } }
@@ -203,6 +205,11 @@ img {
       transform: rotateX(80deg) translateY(1rem);
       -webkit-transform-origin: bottom;
       transform-origin: bottom; }
+  .zmiti-main-ui canvas {
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    left: 0; }
 
 .zmiti-q-item {
   width: 100%;
@@ -219,7 +226,7 @@ img {
   margin: 0 auto;
   color: #fff;
   line-height: 1.5;
-  font-size: 12px;
+  font-size: .375rem;
   padding: 1rem .8rem .6rem;
   border-radius: 0.3rem;
   background: #69aa2f;
@@ -272,26 +279,29 @@ img {
   -webkit-box-orient: horizontal; }
   .zmiti-over-C .zmiti-over {
     width: 8rem;
+    margin-top: -20vh;
     position: relative;
     color: #ef5e30; }
     .zmiti-over-C .zmiti-over .zmiti-unit {
       position: absolute;
-      top: 3.55rem;
-      left: 52%;
+      top: 3.45rem;
+      left: 57%;
       font-size: 12px; }
     .zmiti-over-C .zmiti-over.over1 .zmiti-result-score {
       top: 4.5rem; }
-    .zmiti-over-C .zmiti-over.over1 .zmiti-unit {
+    .zmiti-over-C .zmiti-over.over1 .zmiti-unit, .zmiti-over-C .zmiti-over.over1 .zmiti-result-text {
       top: 4.55rem; }
     .zmiti-over-C .zmiti-over.over2 {
       color: #8a8a8a; }
       .zmiti-over-C .zmiti-over.over2 .zmiti-result-score {
         top: 4.5rem; }
-      .zmiti-over-C .zmiti-over.over2 .zmiti-unit {
+      .zmiti-over-C .zmiti-over.over2 .zmiti-result-text {
+        top: 4.6rem; }
+      .zmiti-over-C .zmiti-over.over2 .zmiti-unit, .zmiti-over-C .zmiti-over.over2 .zmiti-result-text {
         top: 4.65rem; }
     .zmiti-over-C .zmiti-over.over3 .zmiti-result-score {
       top: 4.5rem; }
-    .zmiti-over-C .zmiti-over.over3 .zmiti-unit {
+    .zmiti-over-C .zmiti-over.over3 .zmiti-unit, .zmiti-over-C .zmiti-over.over3 .zmiti-result-text {
       top: 4.55rem; }
     .zmiti-over-C .zmiti-over .zmiti-result-score {
       width: .6rem;
@@ -301,7 +311,7 @@ img {
       overflow: hidden;
       line-height: .6rem;
       position: absolute;
-      left: 50%;
+      left: 56%;
       margin-left: -.6rem;
       z-index: 10;
       border: 1px solid transparent;
@@ -311,12 +321,22 @@ img {
         -webkit-transition: 0.3s;
         transition: 0.3s;
         display: inline-block; }
+    .zmiti-over-C .zmiti-over .zmiti-result-text {
+      top: 3.4rem;
+      left: 40%;
+      font-size: 12px;
+      position: absolute; }
   .zmiti-over-C .zmiti-over-btns {
     width: 8rem;
     margin: .4rem auto;
-    text-align: center; }
-    .zmiti-over-C .zmiti-over-btns img {
-      width: 3.5rem; }
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-box-orient: horizontal; }
+    .zmiti-over-C .zmiti-over-btns span {
+      display: block;
+      -webkit-box-flex: 1; }
 
 .zmiti-mask {
   position: fixed;
@@ -328,6 +348,79 @@ img {
   background: rgba(0, 0, 0, 0.5);
   text-align: right; }
   .zmiti-mask img {
-    width: 5rem; }
+    width: 3rem; }
+
+.zmiti-error-list {
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001; }
+  .zmiti-error-list .zmiti-error-title {
+    position: absolute;
+    width: 5rem;
+    left: 2.5rem;
+    top: .5rem;
+    z-index: 1; }
+  .zmiti-error-list .zmiti-error-bg {
+    width: 9rem;
+    position: absolute;
+    left: .5rem;
+    top: 1rem;
+    height: 88vh; }
+    .zmiti-error-list .zmiti-error-bg img {
+      width: 100%;
+      height: 100%; }
+  .zmiti-error-list .zmiti-error-content {
+    width: 8.6rem;
+    left: .7rem;
+    top: 1.3rem;
+    height: 82vh;
+    overflow: hidden;
+    position: absolute; }
+    .zmiti-error-list .zmiti-error-content > ul {
+      width: 90%;
+      margin: 0 auto;
+      padding: 1rem 0 0 0; }
+      .zmiti-error-list .zmiti-error-content > ul li {
+        margin: .4rem 0;
+        border-bottom: 1px solid #ccbeb6;
+        padding-bottom: .4rem; }
+        .zmiti-error-list .zmiti-error-content > ul li:last-of-type {
+          border: none; }
+        .zmiti-error-list .zmiti-error-content > ul li .zmiti-error-answer {
+          margin-top: .3rem; }
+          .zmiti-error-list .zmiti-error-content > ul li .zmiti-error-answer.horizontal {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            -webkit-box-orient: horizontal;
+            -webkit-box-pack: justify; }
+          .zmiti-error-list .zmiti-error-content > ul li .zmiti-error-answer > div {
+            line-height: .8rem; }
+            .zmiti-error-list .zmiti-error-content > ul li .zmiti-error-answer > div.right {
+              color: #80c71b;
+              position: relative; }
+              .zmiti-error-list .zmiti-error-content > ul li .zmiti-error-answer > div.right img {
+                width: .5rem;
+                margin-left: .1rem; }
+  .zmiti-error-list .zmiti-back {
+    position: absolute;
+    width: 4rem;
+    left: 3rem;
+    bottom: .2rem;
+    overflow: hidden; }
+
+.zmiti-copyright {
+  position: absolute;
+  width: 10rem;
+  font-size: 12px;
+  color: #fff;
+  left: 0rem;
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+  bottom: 1rem;
+  text-align: center; }
+  .zmiti-copyright div {
+    line-height: .7rem; }
+  .zmiti-copyright img {
+    width: 1.6rem; }
 
 /*# sourceMappingURL=main.css.map */

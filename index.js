@@ -1,4 +1,3 @@
-console.log('vue start1 ...')
 import Vue from "vue";
 import Main from './components/main.vue'
 import Index from './components/index.vue';

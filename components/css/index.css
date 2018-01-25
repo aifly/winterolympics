@@ -17,6 +17,22 @@
   text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis; }
 
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 2000;
+  right: .5rem;
+  top: .5rem; }
+  .zmiti-play.rotate {
+    -webkit-animation: rotate 5s linear infinite;
+    animation: rotate 5s linear infinite; }
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 .zmiti-index-main-ui {
   z-index: 101;
   -webkit-transform-style: preserve-3d;
@@ -103,5 +119,11 @@
     border-radius: 50%;
     -webkit-transform: rotate(-63deg);
     transform: rotate(-63deg); }
+  .zmiti-index-main-ui .zmiti-logo {
+    width: 1rem;
+    position: absolute;
+    right: .6rem;
+    bottom: .6rem;
+    z-index: -1; }
 
 /*# sourceMappingURL=index.css.map */

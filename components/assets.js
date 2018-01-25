@@ -1,6 +1,6 @@
 var imgs = {
 	topSnow: './assets/images/top-snow.png',
-	dong: './assets/images/dong.png',
+	//dong: './assets/images/dong.png',
 	answers: './assets/images/answer.png',
 	answers1: './assets/images/answer1.png',
 	answers2: './assets/images/answer2.png',
@@ -22,8 +22,9 @@ var imgs = {
 	over1: './assets/images/over1.png',
 	over2: './assets/images/over2.png',
 	over3: './assets/images/over3.png',
-	restart: './assets/images/restart.png',
-	share: './assets/images/share.png',
+	restart: './assets/images/restart1.png',
+	errorquestion: './assets/images/error-question-btn1.png',
+	share: './assets/images/share1.png',
 	title: './assets/images/title.png',
 	start: './assets/images/start.png',
 	startbg: './assets/images/startbg.png',
@@ -31,8 +32,12 @@ var imgs = {
 	tree2: './assets/images/tree2.png',
 	arrow: './assets/images/arrow.png',
 	play: './assets/images/play.png',
+	logo: './assets/images/logo.png',
 	right: './assets/images/right.png',
 	error: './assets/images/error.png',
+	back: './assets/images/back.png',
+	errorQuestionTitle: './assets/images/error-question-title.png',
+	errorListBg: './assets/images/error-question-list-bg.png',
 	index: './assets/images/index.jpg',
 
 }
