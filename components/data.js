@@ -19,7 +19,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '___在1998年18届日本长野冬奥会女子自由式滑雪空中技巧项目上为中国实现冬奥会雪上项目奖牌"零"的突破。',
+		title: '___在1998年第18届日本长野冬奥会女子自由式滑雪空中技巧项目上为中国实现冬奥会雪上项目奖牌"零"的突破。',
 		horizontal: true,
 		answers: ['徐囡囡', ' 李妮娜', '郭心心'],
 		answers1: [{}, {}, {}],
@@ -41,6 +41,7 @@ var QList = [
 		answers: ['杨阳  1998年日本长野冬奥会', '王濛  2006年意大利都灵冬奥会', '杨扬  2002年美国盐湖城冬奥会'],
 		answers1: [{}, {}, {}],
 		right: 2,
+		isBig: true,
 		answerStyle: [{
 			background: 'url(' + imgs.answers + ') no-repeat center top',
 			backgroundSize: 'contain'
@@ -87,7 +88,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '___以9枚金牌成为中国获得冬奥会金牌最多的项目是',
+		title: '___以9枚金牌成为中国获得冬奥会金牌最多的项目。',
 		horizontal: true,
 		answers: ['短道速滑', '速度滑冰', '花样滑冰'],
 		answers1: [{}, {}, {}],
@@ -104,9 +105,9 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '___上中国队包揽了当届冬奥会短道速滑女子项目全部四枚金牌。',
+		title: ' 中国队包揽了___冬奥会短道速滑女子项目全部四枚金牌。',
 		horizontal: false,
-		answers: ['2006年意大利都灵冬奥会', '2010年加拿大温哥华冬奥会', '2002年美国盐湖城冬奥会'],
+		answers: ['2006年意大利都灵', '2010年加拿大温哥华', '2002年美国盐湖城'],
 		answers1: [{}, {}, {}],
 		right: 1,
 		answerStyle: [{
@@ -121,7 +122,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '为中国首次夺得速度滑冰项目金牌。',
+		title: '___为中国首次夺得速度滑冰项目金牌。',
 		horizontal: true,
 		answers: ['杨扬', '张虹', '王濛'],
 		answers1: [{}, {}, {}],
@@ -140,7 +141,7 @@ var QList = [
 	}, {
 		title: '申雪、赵宏博在___冬奥会上为中国首次夺得花样滑冰双人滑金牌。',
 		horizontal: false,
-		answers: ['2006年意大利都灵冬奥会', '2010年加拿大温哥华冬奥会', ' 2002年美国盐湖城冬奥会'],
+		answers: ['2006年意大利都灵', '2010年加拿大温哥华', ' 2002年美国盐湖城'],
 		answers1: [{}, {}, {}],
 		right: 1,
 		answerStyle: [{
@@ -196,13 +197,13 @@ var QList = [
 		isBig: true,
 		right: 0,
 		answerStyle: [{
-			background: 'url(' + imgs.answersbig + ') no-repeat center top',
+			background: 'url(' + imgs.answerbig + ') no-repeat center top',
 			backgroundSize: 'contain'
 		}, {
-			background: 'url(' + imgs.answersbig + ') no-repeat center top',
+			background: 'url(' + imgs.answerbig + ') no-repeat center top',
 			backgroundSize: 'contain'
 		}, {
-			background: 'url(' + imgs.answersbig + ') no-repeat center top',
+			background: 'url(' + imgs.answerbig + ') no-repeat center top',
 			backgroundSize: 'contain'
 		}],
 		snow: [imgs.snow1, imgs.snow1, imgs.snow1]
@@ -343,9 +344,9 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '都灵奥会花样滑冰双人滑自由滑的比赛中，___在冲击世界上最高难度的抛跳时摔在冰面上严重受伤，简单的包扎之后，两人顺利地完成了一系列高难度动作，他们勇敢的表现不但征服了全场观众，也征服了现场裁判，最终拼得一枚银牌！',
+		title: '在都灵冬奥会花样滑冰双人滑自由滑比赛中，___在冲击世界上最高难度的抛跳时摔在冰面上严重受伤，经过简单的包扎之后，两人顺利地完成了一系列高难度动作，他们的表现不但征服了全场观众，也征服了现场裁判，最终拼得一枚银牌！',
 		horizontal: true,
-		answers: ['雪|赵宏博', '张丹/张昊', '庞清|佟健'],
+		answers: ['申雪/赵宏博', '张丹/张昊', '庞清/佟健'],
 		answers1: [{}, {}, {}],
 		right: 1,
 		answerStyle: [{
@@ -377,7 +378,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '2006年都灵冬季奥运会上，这就是韩国___，夺得了短道速滑8枚金牌中的6枚，成为当届冬奥会上发挥最出色的单项运动队。',
+		title: '在2006年都灵冬奥会上，韩国的___夺得了短道速滑8枚金牌中的6枚，成为当届冬奥会上发挥最出色的单项运动队。',
 		horizontal: false,
 		answers: ['短道速滑队', '花样滑冰队 ', '速度滑冰队'],
 		answers1: [{}, {}, {}],
@@ -430,7 +431,7 @@ var QList = [
 	}, {
 		title: '进入21世纪后，中国队在哪届冬奥会上，选择了非国旗色的蓝白棉服出席冬奥会开幕式？',
 		horizontal: false,
-		answers: ['都灵冬奥会', '都灵冬奥会', '索契冬奥会'],
+		answers: ['都灵冬奥会', '温哥华冬奥会', '索契冬奥会'],
 		answers1: [{}, {}, {}],
 		right: 0,
 		answerStyle: [{
@@ -462,7 +463,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '2014年索契冬奥会短道速滑女子500米决赛中，孤军作战的___由于其他三位选手接连意外摔倒，她一人一马当先滑到最后摘金，为中国实现该项目四连冠，这也是中国代表团本届冬奥会的首金。',
+		title: '在2014年索契冬奥会短道速滑女子500米决赛中，孤军作战的___由于其他三位选手接连意外摔倒，她一马当先滑到最后摘金，为中国实现该项目四连冠。',
 		horizontal: true,
 		answers: ['李坚柔', '周洋', '王濛'],
 		answers1: [{}, {}, {}],
@@ -479,7 +480,7 @@ var QList = [
 		}],
 		snow: [imgs.snow, imgs.snow, imgs.snow]
 	}, {
-		title: '___花样滑冰冰舞比赛中，立陶宛人托比亚斯不小心用冰刀划开了男伴斯塔纽纳斯的裤子，不过男伴还是坚持完成比赛，最总他们总排名位列第17位。',
+		title: '在___花样滑冰冰舞比赛中，立陶宛人托比亚斯不小心用冰刀划开了男伴斯塔纽纳斯的裤子，但是男伴还是坚持完成了比赛，最后他们总排名位列第17位。',
 		horizontal: false,
 		answers: ['都灵冬奥会', '温哥华冬奥会', '索契冬奥会'],
 		answers1: [{}, {}, {}],

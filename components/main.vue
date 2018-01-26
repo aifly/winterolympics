@@ -11,9 +11,9 @@
                   {{item.title}}
                 </header>
                 <ul class="zmiti-a-list" :class="{'show':iNow===i}">
-                   <li @click='chooseAnswer($event,j,i)' :class='{"left":j%2===0,"right":j%2===1,"hide":item.answers1[j].hide}' v-for='(an,j) in item.answers' :style="item.answerStyle[j]">
+                   <li @click='chooseAnswer($event,j,i)' :class='{"big":item.isBig, "left":j%2===0,"right":j%2===1,"hide":item.answers1[j].hide}' v-for='(an,j) in item.answers' :style="item.answerStyle[j]">
                       <img :src='item.snow[j]' class="zmiti-snow-img"  />
-                      <span>{{answerItem[j]}} </span>
+                      <span>{{answerItem[j]}}. </span>
                       <span>{{an}}</span>
                       <span class="zmiti-result" v-if='j===item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.right" alt=""></span>
                       <span class="zmiti-result" v-if='j!==item.right && clickItmeIndex===j && iNow === i'><img :src="imgs.error" alt=""></span>
@@ -59,7 +59,7 @@
                     <span class="zmiti-unit">题</span>
                   </div>
                   <div class="zmiti-over-btns">
-                     <span @click='restart'><img :src="imgs.restart" alt=""></span>
+                     <span @touchstart='restart'><img :src="imgs.restart" alt=""></span>
                      <span @click="showMask=true"><img :src="imgs.share" alt=""></span>
                      <span @click='lookErrorList'><img :src="imgs.errorquestion" alt=""></span>
                   </div>
@@ -67,7 +67,7 @@
 
               <div class="zmiti-copyright">
                   <img :src="imgs.logo" alt="">
-                  <div>新华社客户端</div>
+                  <!-- <div hidden="hidden">新华社客户端</div> -->
                   <div>新华社体育部、新华社摄影部、新华社新媒体中心联合出品</div>
 
               </div>
@@ -336,7 +336,7 @@ export default {
                       translateX:0,
                       translateY:0
                     }, {
-                      duration: 1000,
+                      duration: 1,
                       complete:()=>{
                           this.imgs.tigger = this.imgs.tiggerSuccess;          
                       }
@@ -408,7 +408,9 @@ export default {
 
     },
     restart(){
-      window.location.href = window.location.href;
+      window.location.reload();
+      //window.location.href = window.location.href.split('?')[0]+'?t='+new Date().getTime();
+
     },
     computedINow(){
       setTimeout(()=>{

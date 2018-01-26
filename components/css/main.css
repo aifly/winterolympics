@@ -159,6 +159,8 @@ img {
       background: #fff;
       position: absolute;
       top: 2px; }
+    .zmiti-a-list li.big {
+      min-width: 7.4rem; }
     .zmiti-a-list li > img {
       width: .4rem;
       margin-right: .2rem; }
@@ -416,10 +418,12 @@ img {
   left: 0rem;
   -webkit-transform: scale(0.9);
   transform: scale(0.9);
-  bottom: 1rem;
+  bottom: .8rem;
   text-align: center; }
   .zmiti-copyright div {
-    line-height: .7rem; }
+    height: 1rem;
+    margin-top: .4rem;
+    line-height: 1rem; }
   .zmiti-copyright img {
     width: 1.6rem; }
 

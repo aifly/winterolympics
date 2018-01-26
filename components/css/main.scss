@@ -168,6 +168,10 @@ img {
 		@include pos(a);
 		$top: 3rem;
 
+		&.big {
+			min-width: 7.4rem;
+		}
+
 		&>img {
 			width: .4rem;
 			margin-right: .2rem;
@@ -524,11 +528,13 @@ img {
 	color: #fff;
 	left: 0rem;
 	@include transform(scale(.9));
-	bottom: 1rem;
+	bottom: .8rem;
 	text-align: center;
 
 	div {
-		line-height: .7rem;
+		height: 1rem;
+		margin-top: .4rem;
+		line-height: 1rem;
 	}
 
 	img {
