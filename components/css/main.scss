@@ -317,87 +317,46 @@ img {
 	@include displayBox(horizontal);
 
 	.zmiti-over {
+		&>div {
+			section {
+				@include pos(a);
+				top: 1.6rem;
+				width: 100%;
+				text-align: center;
+				font-size: 12px;
+
+				.zmiti-result-score {
+					font-size: .8rem;
+					font-family: Georgia;
+				}
+
+			}
+
+			ul {
+				width: 100%;
+				@include pos(a);
+				top: 3rem;
+				@include displayBox(horizontal);
+
+				li {
+					width: 1rem;
+				}
+
+				img {
+				}
+
+				&.seconds {
+					margin-top: 1.5rem;
+				}
+
+			}
+
+		}
+
 		width: 8rem;
 		margin-top: -20vh;
 		@include pos(r);
 		color: #ef5e30;
-
-		.zmiti-unit {
-			@include pos(a);
-			top: 3.45rem;
-			left: 57%;
-			font-size: 12px;
-		}
-
-		&.over1 {
-			.zmiti-result-score {
-				top: 4.5rem;
-			}
-
-			.zmiti-unit, .zmiti-result-text {
-				top: 4.55rem;
-			}
-
-		}
-
-		&.over2 {
-			color: #8a8a8a;
-
-			.zmiti-result-score {
-				top: 4.5rem;
-			}
-
-			.zmiti-result-text {
-				top: 4.6rem;
-			}
-
-			.zmiti-unit, .zmiti-result-text {
-				top: 4.65rem;
-			}
-
-		}
-
-		&.over3 {
-			.zmiti-result-score {
-				top: 4.5rem;
-			}
-
-			.zmiti-unit, .zmiti-result-text {
-				top: 4.55rem;
-			}
-
-		}
-
-		.zmiti-result-score {
-			width: .6rem;
-			font-family: Georgia;
-			height: .6rem;
-			font-size: .6rem;
-			overflow: hidden;
-			line-height: .6rem;
-			@include pos(a);
-			left: 56%;
-			margin-left: -.6rem;
-			z-index: 10;
-			border: 1px solid transparent;
-			top: 3.4rem;
-			text-align: center;
-
-			&>span {
-				@include transition(.3s);
-				display: inline-block;
-				//@include transform(translate3d(0, -.6rem, 0));
-			}
-
-		}
-
-		.zmiti-result-text {
-			top: 3.4rem;
-			left: 40%;
-			font-size: 12px;
-			@include pos(a);
-		}
-
 	}
 
 	.zmiti-over-btns {

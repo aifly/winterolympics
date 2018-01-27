@@ -47,16 +47,66 @@
               <div class="zmiti-over" :class='rightAnswer.key'>
                   <div>
                     <img :src="imgs[rightAnswer.key]" alt="" />
-                    <span class="zmiti-result-text">答对</span>
-                    <div class="zmiti-result-score" >
-                      <span :style="{WebkitTransform:'translate3d(0,'+-(rightAnswer.count*.6)+'rem,0)'}">
-                          <label v-for='(label,i) in new Array(11)'>
-                            {{i}}
-                          </label>
-                      </span>
-                     
+                    <section>
+                        <span class="zmiti-result-text">答对</span>
+                        <span class="zmiti-result-score" >
+                          {{rightAnswer.count}}
+                        </span>
+                        <span class="zmiti-unit">题</span>
+                    </section>
+
+                    <div v-if='rightAnswer.count<=4'>
+                      <ul>
+                        <li v-for='i in new Array(rightAnswer.count)'>
+                           <img :src="imgs.medal" alt="">
+                        </li>
+                      </ul>  
                     </div>
-                    <span class="zmiti-unit">题</span>
+
+                    <div v-if='rightAnswer.count>4 && rightAnswer.count<=6'>
+                        <ul>
+                          <li>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                          <li>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                        </ul>  
+                        <ul class="seconds">
+                          <li v-for='i in new Array(rightAnswer.count-2)'>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                         
+                        </ul> 
+                    </div>
+
+                     <div v-if='rightAnswer.count>6 && rightAnswer.count<=8'>
+                        <ul>
+                          <li v-for='i in new Array(3)'>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                        </ul>  
+                        <ul class="seconds">
+                          <li v-for='i in new Array(rightAnswer.count-3)'>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                        </ul> 
+                    </div>
+
+
+                    <div v-if='rightAnswer.count === 9'>
+                        <ul>
+                          <li v-for='i in new Array(4)'>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                        </ul>  
+                        <ul class="seconds">
+                          <li v-for='i in new Array(rightAnswer.count-4)'>
+                             <img :src="imgs.medal" alt="">
+                          </li>
+                        </ul> 
+                    </div>
+                    
                   </div>
                   <div class="zmiti-over-btns">
                      <span @touchstart='restart'><img :src="imgs.restart" alt=""></span>
@@ -332,11 +382,13 @@ export default {
                 complete:()=>{
                   s.imgs.tigger = this.imgs.tiggerError;
                   s.computedINow();
+
                   Velocity(this.$refs['tigger'], {
                       translateX:0,
                       translateY:0
                     }, {
                       duration: 1,
+                      delay:1000,
                       complete:()=>{
                           this.imgs.tigger = this.imgs.tiggerSuccess;          
                       }
